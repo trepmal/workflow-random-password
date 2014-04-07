@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>kdl-random-password</string>
+	<key>connections</key>
+	<dict>
+		<key>8C0CF512-B7AB-47F2-BE5D-14245D7BEDDC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C2AC0F34-8521-4B71-9057-C9ECABC5A474</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>AEFE5060-28FF-437A-B95E-5EF96B092591</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Ding!</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>FF6CA3E0-6565-4BD7-9AAD-2FC53137A753</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>paste into frontmost app</string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Kailey Lampert</string>
+	<key>description</key>
+	<string>Get a random password</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Random Password</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>FF6CA3E0-6565-4BD7-9AAD-2FC53137A753</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string># remove new lines, copy to clipboard
+echo "{query}" | tr -d '\n' | pbcopy
+# play sound
+afplay /System/Library/Sounds/Glass.aiff
+</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.script</string>
+			<key>uid</key>
+			<string>AEFE5060-28FF-437A-B95E-5EF96B092591</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>C2AC0F34-8521-4B71-9057-C9ECABC5A474</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>password</string>
+				<key>script</key>
+				<string>require_once('extension_utils.php');
+$utils = new ExtensionUtils();
+
+$q = '{query}';
+
+if (empty( $q ) ) {
+	$q = 12;
+}
+$q = stripslashes( $q );
+$q = explode( ' ', $q );
+
+$length = is_numeric( $q[0] ) ? $q[0] : 12;
+$results = array();
+for( $i=0; $i&lt;=16; $i++ ) {
+	$password = random_password( $length, $q );
+	$results[] = array(
+		'title' =&gt; htmlspecialchars( $password ),
+		'icon' =&gt; 'icon.png',
+		'valid' =&gt; '',
+		'uid' =&gt; '',
+		'subtitle' =&gt; 'Copy to clipboard',
+		'arg' =&gt; $password,
+	);
+}
+
+echo $utils-&gt;toXml( $results );
+
+
+function random_password( $length, $q ) {
+
+	$lcase = range('a','z');
+	$ucase = range('A', 'Z');
+	$nums = range('0', '9');
+	$other = array();
+
+	if ( in_array( 'stronger', $q ) ) {
+		$q[] = 'strong';
+		$other = array_merge( $other, str_split( '-_ []{}&lt;&gt;~`+=,.;:/?|', 1 ) );
+	}
+
+	if ( in_array( 'strong', $q ) )
+		$other = array_merge( $other, str_split( '!@#$%^&amp;*()!@#$%^&amp;*()', 1 ) );
+
+	$chars = array_merge( $lcase, $ucase, $nums, $nums, $other ); //numbers twice, for some balance
+
+	$pass = '';
+	$i = 1;
+	do {
+		shuffle($chars);
+		$pass .= $chars[0];
+		++$i;
+	} while ($i &lt;= $length);
+	
+	return $pass;
+}
+</string>
+				<key>subtext</key>
+				<string>password {n} {strong|er}</string>
+				<key>title</key>
+				<string>Password</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>8C0CF512-B7AB-47F2-BE5D-14245D7BEDDC</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>8C0CF512-B7AB-47F2-BE5D-14245D7BEDDC</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>AEFE5060-28FF-437A-B95E-5EF96B092591</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>C2AC0F34-8521-4B71-9057-C9ECABC5A474</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>FF6CA3E0-6565-4BD7-9AAD-2FC53137A753</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://trepmal.com/alfredapp/random-password/</string>
+</dict>
+</plist>
