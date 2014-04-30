@@ -48,14 +48,16 @@
 			<key>config</key>
 			<dict>
 				<key>autopaste</key>
-				<true/>
+				<false/>
 				<key>clipboardtext</key>
 				<string>{query}</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
-			<string>FF6CA3E0-6565-4BD7-9AAD-2FC53137A753</string>
+			<string>C2AC0F34-8521-4B71-9057-C9ECABC5A474</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -75,19 +77,8 @@ afplay /System/Library/Sounds/Glass.aiff
 			<string>alfred.workflow.output.script</string>
 			<key>uid</key>
 			<string>AEFE5060-28FF-437A-B95E-5EF96B092591</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>C2AC0F34-8521-4B71-9057-C9ECABC5A474</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -105,7 +96,7 @@ $utils = new ExtensionUtils();
 $q = '{query}';
 
 if (empty( $q ) ) {
-	$q = 12;
+	$q = '24 stronger';
 }
 $q = stripslashes( $q );
 $q = explode( ' ', $q );
@@ -168,6 +159,23 @@ function random_password( $length, $q ) {
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>8C0CF512-B7AB-47F2-BE5D-14245D7BEDDC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>FF6CA3E0-6565-4BD7-9AAD-2FC53137A753</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>
